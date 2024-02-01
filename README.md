@@ -5,11 +5,11 @@ Analyze WordPress forms usage from a user session coming from a residential prox
 
 Monocle can detect a user session coming from a residential proxy, malware proxy, or other endpoint based proxy network. By detecting this at the session level, you can take action on abusive users without impacting legitimate ones.
 
-[Monocle](https://spur.us/monocle)
-[Docs](https://docs.spur.us/#/monocle)
-[FAQ](https://spur.us/monocle/#faqs)
-[Demo](https://spur.us/app/demos/monocle/form)
-[Blog](https://spur.us/announcing-monocle-community-edition)
+[Monocle](https://spur.us/monocle)  
+[Docs](https://docs.spur.us/#/monocle)  
+[FAQ](https://spur.us/monocle/#faqs)  
+[Demo](https://spur.us/app/demos/monocle/form)  
+[Blog](https://spur.us/announcing-monocle-community-edition)  
 
 ## Help and Support
 
