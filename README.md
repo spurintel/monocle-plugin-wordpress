@@ -1,4 +1,4 @@
-# Monocle Wordpress by Spur
+# Monocle WordPress by Spur
 Analyze WordPress forms usage from a user session coming from a residential proxy, malware proxy, or other endpoint based proxy network.
 
 ## Description
