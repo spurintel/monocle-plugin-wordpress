@@ -251,20 +251,21 @@ function monocle_decrypt_bundle_api($threatBundle): string
     $site_token = $options['site_token'];
 
     // make bundle API call
-    $curl = curl_init("https://bundle.mcl.spur.us/api/v1/decrypt");
-    curl_setopt($curl, CURLOPT_POST, true);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/plain; charset=utf-8','TOKEN: '.$decrypt_token));
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $threatBundle);
-    if (($result = @curl_exec($curl)) === false) {
-        $error = error_get_last();
-        error_log("API request failed with error: " . $error['message']);
-        return "";
-    } else {
-        return $result;
-    }
-    curl_close($curl);
-
+    $url = "https://bundle.mcl.spur.us/api/v1/decrypt";
+    $result = wp_remote_post($url, array(
+        'method' => 'POST',
+        'headers'   => [
+			'content-type' => 'text/plain; charset=utf-8',
+			'TOKEN'     => $decrypt_token,
+		],
+        'timeout'     => 60,
+        'redirection' => 5,
+        'blocking'    => true,
+        'httpversion' => '1.0',
+        'sslverify' => true,
+        'body' => $threatBundle)
+    );
+    return wp_remote_retrieve_body($result);
 }
 
 function monocle_get_decoded_bundle($bundle): array
@@ -298,7 +299,7 @@ function monocle_should_block($decoded_bundle): bool
         $strictness = $options['strictness'];
     }
 
-    error_log(json_encode($decoded_bundle));
+    error_log(wp_json_encode($decoded_bundle));
 
     $proxy = false;
     $vpn = false;
