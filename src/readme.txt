@@ -1,4 +1,4 @@
-=== Monocle WordPress by Spur ===
+=== Monocle by Spur ===
 Contributors: Spur
 Tags: monocle, spur, security, fraud, captcha, recaptcha, vpn, proxy, Invisible reCaptcha, Invisible captcha, captha, cpatcha
 Requires at least: 6.0
