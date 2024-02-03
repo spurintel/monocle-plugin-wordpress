@@ -219,6 +219,17 @@ function monocle_plugin_validate_options($input): array
     return $valid;
 }
 
+// Add nonce to forms
+function monocle_form_nonce()
+{
+    wp_nonce_field( 'monocle-form', 'monocle-nonce' );
+}
+
+add_action('login_form_top', 'monocle_form_nonce');
+add_action('comment_form_top', 'monocle_form_nonce');
+add_action('lostpassword_form', 'monocle_form_nonce');
+add_action('register_form', 'monocle_form_nonce');
+
 // Add the monocle javascript to login page
 function monocle_enqueue_script()
 {
@@ -332,6 +343,11 @@ function monocle_should_block($decoded_bundle): bool
 // Do monocle check on registrations
 function monocle_check_registration_fields($errors, $sanitized_user_login, $user_email)
 {
+    if (!isset( $_POST['monocle-nonce'] ) || !wp_verify_nonce( $_POST['monocle-nonce'], 'monocle-form' ) ) {
+        $errors->add('monocle_nonce_error', __('<strong>ERROR</strong>: Invalid security nonce', 'monocle'));
+        return $errors;
+    }
+
     $bundle = $_POST['monocle'];
     $decoded_bundle = monocle_get_decoded_bundle($bundle);
     if (empty($decoded_bundle)) {
@@ -356,6 +372,10 @@ add_filter('registration_errors', 'monocle_check_registration_fields', 10, 3);
 
 function monocle_check_login_fields($error)
 {
+    if (!isset( $_POST['monocle-nonce'] ) || !wp_verify_nonce( $_POST['monocle-nonce'], 'monocle-form' ) ) {
+        return "<strong>ERROR</strong>: Invalid security nonce";
+    }
+
     if(!array_key_exists('monocle', $_POST)) {
         return "<strong>ERROR</strong>: Unable to validate with Monocle";
     }
@@ -379,10 +399,14 @@ add_filter('login_errors', 'monocle_check_login_fields', 10, 1);
 
 function monocle_check_comment()
 {
+    if (!isset( $_POST['monocle-nonce'] ) || !wp_verify_nonce( $_POST['monocle-nonce'], 'monocle-form' ) ) {
+        wp_die( __( 'Invalid security nonce') );
+    }
+
     if(!array_key_exists('monocle', $_POST)) {
         wp_die(__('Error: Monocle check failed'));
     }
-
+    
     $bundle = $_POST['monocle'];
     $decoded_bundle = monocle_get_decoded_bundle($bundle);
     if(monocle_should_block($decoded_bundle)) {
