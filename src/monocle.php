@@ -261,8 +261,8 @@ function monocle_decrypt_bundle_api($threatBundle): string
     $decrypt_token = $options['decrypt_token'];
     $site_token = $options['site_token'];
 
-    // make bundle API call
-    $url = "https://bundle.mcl.spur.us/api/v1/decrypt";
+    // decrypt the assessment bundle
+    $url = "http://decrypt.mcl.spur.us/api/v1/assessment";
     $result = wp_remote_post($url, array(
         'method' => 'POST',
         'headers'   => [
