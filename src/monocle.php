@@ -51,7 +51,7 @@ add_action('admin_menu', 'monocle_plugin_add_settings_menu');
 function monocle_plugin_add_settings_menu()
 {
     add_options_page(
-        'Monocle Plugin Settings', 'Monocle Settings', 'manage_options',
+        'Monocle Plugin Settings', 'Monocle', 'manage_options',
         'monocle_plugin', 'monocle_plugin_option_page'
     );
 }
@@ -137,7 +137,7 @@ function monocle_plugin_admin_init()
 function monocle_plugin_section_text()
 {
     echo '<p>Create an account and sign in at Spur. (<a href="https://spur.us" target="_blank">https://spur.us</a>)';
-    echo '<br>Tokens, documetation, and usage dashboard can be found in the <a href="https://app.spur.us/monocle" target="_blank">Monocle</a> menu.</p>';
+    echo '<br>Tokens, documentation, and usage dashboard can be found in the <a href="https://app.spur.us/monocle" target="_blank">Monocle</a> menu.</p>';
 }
 
 // Display and fill the site token form field
@@ -166,7 +166,7 @@ function monocle_plugin_setting_decrypt_token()
 
     // echo the field
     echo "<input id='decrypt_token' name='monocle_plugin_options[decrypt_token]'
-    type='text' size='32' value='" . esc_attr($decrypt_token) . "'/>";
+    type='text' size='40' value='" . esc_attr($decrypt_token) . "'/>";
 }
 
 // Display and fill the strictness form field

@@ -28,7 +28,7 @@ support@spur.us
 
 1. Add the Monocle plugin from the Plugins menu in your WordPress admin console.
 2. Activate the plugin.
-3. Configure your monocle site token and decrypt token in Settings/Monocle Settings from the WordPress admin console.
+3. Configure your monocle site token and decrypt token in Settings/Monocle from the WordPress admin console.
 
 == Frequently Asked Questions ==
 
@@ -44,7 +44,7 @@ Follow the next steps in order to get and enable monocle protection:
 = What pages does Monocle protect? =
 
 When enabled, protects the standard WordPress register, login, lost password, and comment pages.
-By default Monocle is in "Log Only" mode.  Additional options are located in the `Settings > Monocle Settings` menu.
+By default Monocle is in "Log Only" mode.  Additional options are located in Settings/Monocle from the WordPress admin console.
  
 = Can I protect other forms? =
 

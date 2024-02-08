@@ -19,7 +19,7 @@ support@spur.us
 
 1. Add the monocle plugin from the Plugins menu in your WordPress admin console.
 2. Activate the plugin
-3. Configure your monocle site token and decrypt token in Settings/Monocle Settings from the WordPress admin console.
+3. Configure your monocle site token and decrypt token in Settings/Monocle from the WordPress admin console.
 4. Ensure that any forms you create have "monocle-enriched" as a class on the \<form\> element, the library will automatically append the latest client threat bundle to the form data with the id "monocle".
 
 ### Frequently Asked Questions
@@ -43,7 +43,7 @@ Note: This uses the [official WordPress docker image](https://hub.docker.com/_/w
 2. Run `docker compose up`
 3. Visit http://localhost:8000 and set up WordPress
 4. Activate the Monocle plugin in the [WordPress admin console](http://localhost:8000/wp-admin/plugins.php)
-5. Configure Monocle under the Settings/Monocle Settings menu
+5. Configure Monocle under the Settings/Monocle menu
 
 ## Changelog
 
@@ -66,7 +66,7 @@ support@spur.us
 
 1. Add the monocle plugin from the Plugins menu in your WordPress admin console.
 2. Activate the plugin
-3. Configure your monocle site token and decrypt token in Settings/Monocle Settings from the WordPress admin console.
+3. Configure your monocle site token and decrypt token in Settings/Monocle from the WordPress admin console.
 4. Ensure that any forms you create have "monocle-enriched" as a class on the \<form\> element, the library will automatically append the latest client threat bundle to the form data with the id "monocle".
 
 ### Frequently Asked Questions
@@ -90,7 +90,7 @@ Note: This uses the [official WordPress docker image](https://hub.docker.com/_/w
 2. Run `docker compose up`
 3. Visit http://localhost:8000 and set up WordPress
 4. Activate the Monocle plugin in the [WordPress admin console](http://localhost:8000/wp-admin/plugins.php)
-5. Configure Monocle under the Settings/Monocle Settings menu
+5. Configure Monocle under the Settings/Monocle menu
 
 ## Changelog
 
