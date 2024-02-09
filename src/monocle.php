@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Monocle
-Plugin URI: http://spur.us
+Plugin URI: https://spur.us
 Description: Monocle is a client side utility to detect VPNs, proxies, residential proxies, malware proxies, and other types of anonymization technologies at a session level. This allows you to make blocking decisions on busy IPs.
 Author: Spur
 Version: 1.0
@@ -259,11 +259,10 @@ function monocle_decrypt_bundle_api($threatBundle): string
         return "";
     }
     $decrypt_token = $options['decrypt_token'];
-    $site_token = $options['site_token'];
 
     // decrypt the assessment bundle
-    $url = "http://decrypt.mcl.spur.us/api/v1/assessment";
-    $result = wp_remote_post($url, array(
+    $url = "https://decrypt.mcl.spur.us/api/v1/assessment";
+    $response = wp_remote_post($url, array(
         'method' => 'POST',
         'headers'   => [
 			'content-type' => 'text/plain; charset=utf-8',
@@ -276,7 +275,18 @@ function monocle_decrypt_bundle_api($threatBundle): string
         'sslverify' => true,
         'body' => $threatBundle)
     );
-    return wp_remote_retrieve_body($result);
+
+    if (is_wp_error($response)) {
+        error_log($response->get_error_message());
+        return "";
+    }
+    elseif ($response['response']['code'] != 200 && $response['response']['code'] != 201) {
+        error_log(json_encode($response));
+        return "";
+    }
+    else {
+         return wp_remote_retrieve_body($response);
+    }
 }
 
 function monocle_get_decoded_bundle($bundle): array
@@ -298,7 +308,7 @@ function monocle_get_decoded_bundle($bundle): array
         error_log("unable to decode bundle");
         return array();
     }
-
+    
     return $decoded_bundle;
 }
 

@@ -36,10 +36,12 @@ support@spur.us
 
 Follow the next steps in order to get and enable monocle protection:
 1. Sign up for an account at [Spur](https://spur.us).
-2. Click the Monocle tab at the top.
-3. Click the create deployment button.
-4. You will see your site and decrypt tokens. Copy them and paste to the appropriate fields on plugin Settings page.
-5. Save changes.
+3. Click the Monocle tab at the top.
+4. Click the Create Deployment button.
+5. Click the Spur Managed checkbox, or you will not be issued an API token.
+6. You will see your site and decrypt API tokens.
+7. Copy them and paste to the appropriate fields on plugin Settings page.
+8. Save changes in Wordpress.
 
 = What pages does Monocle protect? =
 
