@@ -198,7 +198,8 @@ function monocle_plugin_setting_error_message()
 {
     // get option 'text_string' value from the database
     $options = get_option('monocle_plugin_options');
-    $errorMessage = "";
+    // default message to blocked users
+    $errorMessage = "Our systems have detected unusual traffic from your computer network.";
     if ($options != null && array_key_exists('error_message', $options)) {
         $errorMessage = $options['error_message'];
     }
