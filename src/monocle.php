@@ -372,8 +372,9 @@ function monocle_check_registration_fields($errors, $sanitized_user_login, $user
         if ($options != null && array_key_exists('error_message', $options)) {
             $msg = $options['error_message'];
         }
-
-        $errors->add('monocle_no_bundle_error', __("<strong>ERROR</strong>: $msg", 'monocle'));
+        /* translators: %s: Custom error message from admin page */
+        $tmsg = sprintf(__("<strong>ERROR</strong>: %s", 'monocle'), $msg);
+        $errors->add('monocle_no_bundle_error', $tmsg);
     }
 
     return $errors;
@@ -425,10 +426,10 @@ function monocle_check_comment()
         $msg = "Monocle check failed";
         if ($options != null && array_key_exists('error_message', $options)) {
             $msg = $options['error_message'];
-            wp_die(__($msg));
         }
-
-        wp_die(__($msg));
+        /* translators: %s: Custom error message from admin page */
+        $tmsg = sprintf(__("%s", 'monocle'), $msg);
+        wp_die($tmsg);
     }
 }
 
