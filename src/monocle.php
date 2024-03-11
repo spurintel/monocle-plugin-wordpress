@@ -354,7 +354,7 @@ function monocle_should_block($decoded_bundle): bool
 // Do monocle check on registrations
 function monocle_check_registration_fields($errors, $sanitized_user_login, $user_email)
 {
-    if (!isset( $_POST['monocle-nonce'] ) || !wp_verify_nonce( $_POST['monocle-nonce'], 'monocle-form' ) ) {
+    if ( ! isset( $_POST['monocle-nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['monocle-nonce'] ) ) , 'monocle-form' ) ) {
         $errors->add('monocle_nonce_error', __('<strong>ERROR</strong>: Invalid security nonce', 'monocle'));
         return $errors;
     }
@@ -384,7 +384,7 @@ add_filter('registration_errors', 'monocle_check_registration_fields', 10, 3);
 
 function monocle_check_login_fields($error)
 {
-    if (!isset( $_POST['monocle-nonce'] ) || !wp_verify_nonce( $_POST['monocle-nonce'], 'monocle-form' ) ) {
+    if ( ! isset( $_POST['monocle-nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['monocle-nonce'] ) ) , 'monocle-form' ) ) {
         return "<strong>ERROR</strong>: Invalid security nonce";
     }
 
@@ -411,7 +411,7 @@ add_filter('login_errors', 'monocle_check_login_fields', 10, 1);
 
 function monocle_check_comment()
 {
-    if (!isset( $_POST['monocle-nonce'] ) || !wp_verify_nonce( $_POST['monocle-nonce'], 'monocle-form' ) ) {
+    if ( ! isset( $_POST['monocle-nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['monocle-nonce'] ) ) , 'monocle-form' ) ) {
         wp_die( __( 'Invalid security nonce') );
     }
 
