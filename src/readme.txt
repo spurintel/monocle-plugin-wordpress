@@ -1,6 +1,6 @@
 === Monocle by Spur ===
 Contributors: Spur
-Tags: monocle, spur, security, fraud, captcha, recaptcha, vpn, proxy, Invisible reCaptcha, Invisible captcha, captha, cpatcha
+Tags: vpn, proxy, captcha, recaptcha, fraud
 Requires at least: 6.0
 Requires PHP: 7.0
 Tested up to: 6.4.3
@@ -12,10 +12,16 @@ Protect WordPress forms from a user session coming from a residential proxy, mal
 
 == Description ==
 
-Monocle can detect a user session coming from a residential proxy, malware proxy, or other endpoint based proxy network. By detecting this at the session level, you can take action on abusive users without impacting legitimate ones.
+Monocle can detect a user session coming from a residential proxy, malware proxy, or other endpoint based proxy network. 
+By detecting this at the session level, you can take action on abusive users without impacting legitimate ones.
 
-[Monocle](https://spur.us/monocle)
-[Docs](https://docs.spur.us/#/monocle)
+= Spur.us Monocle API =
+This plugin relies on the [spur.us Monocle](https://spur.us/monocle) API for both evaluation of the client behavior, and decryption of the
+resulting analysis.  The API key is free but requires [registration](https://app.spur.us/start/create-account).
+
+= Additional Resources =
+[Privacy Policy](https://spur.us/privacy-policy/)
+[Developer Docs](https://docs.spur.us/#/monocle)
 [FAQ](https://spur.us/monocle/#faqs)
 [Demo](https://spur.us/app/demos/monocle/form)
 [Blog](https://spur.us/announcing-monocle-community-edition)
