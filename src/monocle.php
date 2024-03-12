@@ -29,6 +29,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 define('MONOCLE_DIR', plugin_dir_path(__FILE__));
 
@@ -186,10 +188,10 @@ function monocle_plugin_setting_strictness()
 
     // echo the field
     echo '<select name="monocle_plugin_options[strictness]" id="strictness">';
-    echo "<option value='vpn' $vpnSelected>No VPNs</option>";
-    echo "<option value='proxy' $proxySelected>No Residential Proxies</option>";
-    echo "<option value='all' $allSelected>No VPNs or Residential Proxies</option>";
-    echo "<option value='log' $logSelected>Log Only</option>";
+    echo "<option value='vpn'" . esc_html($vpnSelected) . ">No VPNs</option>";
+    echo "<option value='proxy'" . esc_html($proxySelected) . ">No Residential Proxies</option>";
+    echo "<option value='all'" . esc_html($allSelected) . ">No VPNs or Residential Proxies</option>";
+    echo "<option value='log'" . esc_html($logSelected) . ">Log Only</option>";
     echo '</select>';
 }
 
@@ -282,7 +284,7 @@ function monocle_decrypt_bundle_api($threatBundle): string
         return "";
     }
     elseif ($response['response']['code'] != 200 && $response['response']['code'] != 201) {
-        error_log(json_encode($response));
+        error_log(wp_json_encode($response));
         return "";
     }
     else {
@@ -412,11 +414,11 @@ add_filter('login_errors', 'monocle_check_login_fields', 10, 1);
 function monocle_check_comment()
 {
     if ( ! isset( $_POST['monocle-nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['monocle-nonce'] ) ) , 'monocle-form' ) ) {
-        wp_die( __( 'Invalid security nonce') );
+        wp_die('Invalid security nonce');
     }
 
     if(!array_key_exists('monocle', $_POST)) {
-        wp_die(__('Error: Monocle check failed'));
+        wp_die('ERROR: Monocle check failed');
     }
     
     $bundle = $_POST['monocle'];
@@ -428,8 +430,8 @@ function monocle_check_comment()
             $msg = $options['error_message'];
         }
         /* translators: %s: Custom error message from admin page */
-        $tmsg = sprintf(__("%s", 'monocle'), $msg);
-        wp_die($tmsg);
+        $tmsg = sprintf(__("<strong>ERROR</strong>: %s", 'monocle'), $msg);
+        wp_die(wp_kses($tmsg, "strong"));
     }
 }
 
