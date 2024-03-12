@@ -109,7 +109,7 @@ function monocle_plugin_admin_init()
     // Create our settings field for decrypt token
     add_settings_field(
         'monocle_plugin_decrypt_token',
-        'Decrypt Token',
+        'API Token',
         'monocle_plugin_setting_decrypt_token',
         'monocle_plugin',
         'monocle_plugin_main'
