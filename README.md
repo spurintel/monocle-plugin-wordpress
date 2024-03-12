@@ -19,7 +19,7 @@ support@spur.us
 
 1. Add the monocle plugin from the Plugins menu in your WordPress admin console.
 2. Activate the plugin
-3. Configure your monocle site token and decrypt token in Settings/Monocle Settings from the WordPress admin console.
+3. Configure your monocle site token and decrypt token in Settings/Monocle from the WordPress admin console.
 4. Ensure that any forms you create have "monocle-enriched" as a class on the \<form\> element, the library will automatically append the latest client threat bundle to the form data with the id "monocle".
 
 ### Frequently Asked Questions
@@ -43,7 +43,7 @@ Note: This uses the [official WordPress docker image](https://hub.docker.com/_/w
 2. Run `docker compose up`
 3. Visit http://localhost:8000 and set up WordPress
 4. Activate the Monocle plugin in the [WordPress admin console](http://localhost:8000/wp-admin/plugins.php)
-5. Configure Monocle under the Settings/Monocle Settings menu
+5. Configure Monocle under the Settings/Monocle menu
 
 ## Changelog
 
@@ -66,7 +66,7 @@ support@spur.us
 
 1. Add the monocle plugin from the Plugins menu in your WordPress admin console.
 2. Activate the plugin
-3. Configure your monocle site token and decrypt token in Settings/Monocle Settings from the WordPress admin console.
+3. Configure your monocle site token and decrypt token in Settings/Monocle from the WordPress admin console.
 4. Ensure that any forms you create have "monocle-enriched" as a class on the \<form\> element, the library will automatically append the latest client threat bundle to the form data with the id "monocle".
 
 ### Frequently Asked Questions
@@ -76,10 +76,12 @@ support@spur.us
 Follow the next steps in order to get and enable monocle protection:
 1. Create an account at spur.us
 2. Navigate to the dashboard.
-3. Click the monocle tab at the top.
-4. Click the create deployment button.
-5. You will see your site and decrypt tokens. Copy them and paste to the appropriate fields on plugin Settings page.
-6. Save changes.
+3. Click the Monocle tab at the top.
+4. Click the Create Deployment button.
+5. Click the Spur Managed checkbox, or you will not be issued an API token.
+6. You will see your site and decrypt API tokens.
+7. Copy them and paste to the appropriate fields on plugin Settings page.
+8. Save changes in Wordpress.
 
 ### How to deploy for testing and development?
 
@@ -90,7 +92,7 @@ Note: This uses the [official WordPress docker image](https://hub.docker.com/_/w
 2. Run `docker compose up`
 3. Visit http://localhost:8000 and set up WordPress
 4. Activate the Monocle plugin in the [WordPress admin console](http://localhost:8000/wp-admin/plugins.php)
-5. Configure Monocle under the Settings/Monocle Settings menu
+5. Configure Monocle under the Settings/Monocle menu
 
 ## Changelog
 
