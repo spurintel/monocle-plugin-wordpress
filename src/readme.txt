@@ -1,6 +1,6 @@
 === Monocle by Spur ===
 Contributors: Spur
-Tags: monocle, spur, security, fraud, captcha, recaptcha, vpn, proxy, Invisible reCaptcha, Invisible captcha, captha, cpatcha
+Tags: vpn, proxy, captcha, recaptcha, fraud
 Requires at least: 6.0
 Requires PHP: 7.0
 Tested up to: 6.4.3
@@ -12,10 +12,16 @@ Protect WordPress forms from a user session coming from a residential proxy, mal
 
 == Description ==
 
-Monocle can detect a user session coming from a residential proxy, malware proxy, or other endpoint based proxy network. By detecting this at the session level, you can take action on abusive users without impacting legitimate ones.
+Monocle can detect a user session coming from a residential proxy, malware proxy, or other endpoint based proxy network. 
+By detecting this at the session level, you can take action on abusive users without impacting legitimate ones.
 
-[Monocle](https://spur.us/monocle)
-[Docs](https://docs.spur.us/#/monocle)
+= Spur.us Monocle API =
+This plugin relies on the [spur.us Monocle](https://spur.us/monocle) API for both evaluation of the client behavior, and decryption of the
+resulting analysis.  The API key is free but requires [registration](https://app.spur.us/start/create-account).
+
+= Additional Resources =
+[Privacy Policy](https://spur.us/privacy-policy/)
+[Developer Docs](https://docs.spur.us/#/monocle)
 [FAQ](https://spur.us/monocle/#faqs)
 [Demo](https://spur.us/app/demos/monocle/form)
 [Blog](https://spur.us/announcing-monocle-community-edition)
@@ -28,7 +34,7 @@ support@spur.us
 
 1. Add the Monocle plugin from the Plugins menu in your WordPress admin console.
 2. Activate the plugin.
-3. Configure your monocle site token and decrypt token in Settings/Monocle Settings from the WordPress admin console.
+3. Configure your monocle site token and decrypt token in Settings/Monocle from the WordPress admin console.
 
 == Frequently Asked Questions ==
 
@@ -36,15 +42,17 @@ support@spur.us
 
 Follow the next steps in order to get and enable monocle protection:
 1. Sign up for an account at [Spur](https://spur.us).
-2. Click the Monocle tab at the top.
-3. Click the create deployment button.
-4. You will see your site and decrypt tokens. Copy them and paste to the appropriate fields on plugin Settings page.
-5. Save changes.
+3. Click the Monocle tab at the top.
+4. Click the Create Deployment button.
+5. Click the Spur Managed checkbox, or you will not be issued an API token.
+6. You will see your site and decrypt API tokens.
+7. Copy them and paste to the appropriate fields on plugin Settings page.
+8. Save changes in Wordpress.
 
 = What pages does Monocle protect? =
 
 When enabled, protects the standard WordPress register, login, lost password, and comment pages.
-By default Monocle is in "Log Only" mode.  Additional options are located in the `Settings > Monocle Settings` menu.
+By default Monocle is in "Log Only" mode.  Additional options are located in Settings/Monocle from the WordPress admin console.
  
 = Can I protect other forms? =
 

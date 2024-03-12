@@ -29,12 +29,6 @@ services:
       - WORDPRESS_DEBUG=true
     volumes:
       - "./src:/var/www/html/wp-content/plugins/monocle"
-
-  build:
-    image: php:7
-    command: tail -F /var/log/messages
-    volumes:
-      - ".:/app"
 volumes:
   db_data:
 

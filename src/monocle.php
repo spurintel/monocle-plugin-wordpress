@@ -2,10 +2,10 @@
 
 /*
 Plugin Name: Monocle
-Plugin URI: http://spur.us
+Plugin URI: https://spur.us
 Description: Monocle is a client side utility to detect VPNs, proxies, residential proxies, malware proxies, and other types of anonymization technologies at a session level. This allows you to make blocking decisions on busy IPs.
 Author: Spur
-Version: 1.0
+Version: 1.0.1
 Requires at least: 5.3
 Requires PHP:  7.4
 Author URI: https://spur.us
@@ -29,6 +29,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 define('MONOCLE_DIR', plugin_dir_path(__FILE__));
 
@@ -51,7 +53,7 @@ add_action('admin_menu', 'monocle_plugin_add_settings_menu');
 function monocle_plugin_add_settings_menu()
 {
     add_options_page(
-        'Monocle Plugin Settings', 'Monocle Settings', 'manage_options',
+        'Monocle Plugin Settings', 'Monocle', 'manage_options',
         'monocle_plugin', 'monocle_plugin_option_page'
     );
 }
@@ -137,7 +139,8 @@ function monocle_plugin_admin_init()
 function monocle_plugin_section_text()
 {
     echo '<p>Create an account and sign in at Spur. (<a href="https://spur.us" target="_blank">https://spur.us</a>)';
-    echo '<br>Tokens, documetation, and usage dashboard can be found in the <a href="https://app.spur.us/monocle" target="_blank">Monocle</a> menu.</p>';
+    echo '<br>Tokens, documentation, and usage dashboard can be found in the <a href="https://app.spur.us/monocle" target="_blank">Monocle</a> menu.';
+    echo '<br>The distinction between a VPN and Residential Proxy is discussed here: <a href="https://spur.us/what-is-a-residential-proxy/" target="_blank">What is a residential Proxy?</a></p>';
 }
 
 // Display and fill the site token form field
@@ -166,7 +169,7 @@ function monocle_plugin_setting_decrypt_token()
 
     // echo the field
     echo "<input id='decrypt_token' name='monocle_plugin_options[decrypt_token]'
-    type='text' size='32' value='" . esc_attr($decrypt_token) . "'/>";
+    type='text' size='40' value='" . esc_attr($decrypt_token) . "'/>";
 }
 
 // Display and fill the strictness form field
@@ -186,10 +189,10 @@ function monocle_plugin_setting_strictness()
 
     // echo the field
     echo '<select name="monocle_plugin_options[strictness]" id="strictness">';
-    echo "<option value='vpn' $vpnSelected>No VPNs</option>";
-    echo "<option value='proxy' $proxySelected>No Residential Proxies</option>";
-    echo "<option value='all' $allSelected>No VPNs or Residential Proxies</option>";
-    echo "<option value='log' $logSelected>Log Only</option>";
+    echo "<option value='vpn'" . esc_html($vpnSelected) . ">No VPNs</option>";
+    echo "<option value='proxy'" . esc_html($proxySelected) . ">No Residential Proxies</option>";
+    echo "<option value='all'" . esc_html($allSelected) . ">No VPNs or Residential Proxies</option>";
+    echo "<option value='log'" . esc_html($logSelected) . ">Log Only</option>";
     echo '</select>';
 }
 
@@ -198,7 +201,8 @@ function monocle_plugin_setting_error_message()
 {
     // get option 'text_string' value from the database
     $options = get_option('monocle_plugin_options');
-    $errorMessage = "";
+    // default message to blocked users
+    $errorMessage = "Our systems have detected unusual traffic from your computer network.";
     if ($options != null && array_key_exists('error_message', $options)) {
         $errorMessage = $options['error_message'];
     }
@@ -236,7 +240,7 @@ function monocle_enqueue_script()
     $options = get_option('monocle_plugin_options');
     if ($options != null && array_key_exists('site_token', $options)) {
         $site_token = $options['site_token'];
-        wp_enqueue_script('monocle', "https://mcl.spur.us/d/mcl.js?tk=$site_token", false);
+        wp_enqueue_script('monocle', "https://mcl.spur.us/d/mcl.js?tk=$site_token", false, 1.0, false);
     }
 }
 
@@ -259,11 +263,10 @@ function monocle_decrypt_bundle_api($threatBundle): string
         return "";
     }
     $decrypt_token = $options['decrypt_token'];
-    $site_token = $options['site_token'];
 
     // decrypt the assessment bundle
-    $url = "http://decrypt.mcl.spur.us/api/v1/assessment";
-    $result = wp_remote_post($url, array(
+    $url = "https://decrypt.mcl.spur.us/api/v1/assessment";
+    $response = wp_remote_post($url, array(
         'method' => 'POST',
         'headers'   => [
 			'content-type' => 'text/plain; charset=utf-8',
@@ -276,7 +279,18 @@ function monocle_decrypt_bundle_api($threatBundle): string
         'sslverify' => true,
         'body' => $threatBundle)
     );
-    return wp_remote_retrieve_body($result);
+
+    if (is_wp_error($response)) {
+        error_log($response->get_error_message());
+        return "";
+    }
+    elseif ($response['response']['code'] != 200 && $response['response']['code'] != 201) {
+        error_log(wp_json_encode($response));
+        return "";
+    }
+    else {
+         return wp_remote_retrieve_body($response);
+    }
 }
 
 function monocle_get_decoded_bundle($bundle): array
@@ -298,7 +312,7 @@ function monocle_get_decoded_bundle($bundle): array
         error_log("unable to decode bundle");
         return array();
     }
-
+    
     return $decoded_bundle;
 }
 
@@ -343,7 +357,7 @@ function monocle_should_block($decoded_bundle): bool
 // Do monocle check on registrations
 function monocle_check_registration_fields($errors, $sanitized_user_login, $user_email)
 {
-    if (!isset( $_POST['monocle-nonce'] ) || !wp_verify_nonce( $_POST['monocle-nonce'], 'monocle-form' ) ) {
+    if ( ! isset( $_POST['monocle-nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['monocle-nonce'] ) ) , 'monocle-form' ) ) {
         $errors->add('monocle_nonce_error', __('<strong>ERROR</strong>: Invalid security nonce', 'monocle'));
         return $errors;
     }
@@ -361,8 +375,9 @@ function monocle_check_registration_fields($errors, $sanitized_user_login, $user
         if ($options != null && array_key_exists('error_message', $options)) {
             $msg = $options['error_message'];
         }
-
-        $errors->add('monocle_no_bundle_error', __("<strong>ERROR</strong>: $msg", 'monocle'));
+        /* translators: %s: Custom error message from admin page */
+        $tmsg = sprintf(__("<strong>ERROR</strong>: %s", 'monocle'), $msg);
+        $errors->add('monocle_no_bundle_error', $tmsg);
     }
 
     return $errors;
@@ -372,7 +387,7 @@ add_filter('registration_errors', 'monocle_check_registration_fields', 10, 3);
 
 function monocle_check_login_fields($error)
 {
-    if (!isset( $_POST['monocle-nonce'] ) || !wp_verify_nonce( $_POST['monocle-nonce'], 'monocle-form' ) ) {
+    if ( ! isset( $_POST['monocle-nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['monocle-nonce'] ) ) , 'monocle-form' ) ) {
         return "<strong>ERROR</strong>: Invalid security nonce";
     }
 
@@ -399,12 +414,12 @@ add_filter('login_errors', 'monocle_check_login_fields', 10, 1);
 
 function monocle_check_comment()
 {
-    if (!isset( $_POST['monocle-nonce'] ) || !wp_verify_nonce( $_POST['monocle-nonce'], 'monocle-form' ) ) {
-        wp_die( __( 'Invalid security nonce') );
+    if ( ! isset( $_POST['monocle-nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['monocle-nonce'] ) ) , 'monocle-form' ) ) {
+        wp_die('Invalid security nonce');
     }
 
     if(!array_key_exists('monocle', $_POST)) {
-        wp_die(__('Error: Monocle check failed'));
+        wp_die('ERROR: Monocle check failed');
     }
     
     $bundle = $_POST['monocle'];
@@ -414,10 +429,10 @@ function monocle_check_comment()
         $msg = "Monocle check failed";
         if ($options != null && array_key_exists('error_message', $options)) {
             $msg = $options['error_message'];
-            wp_die(__($msg));
         }
-
-        wp_die(__($msg));
+        /* translators: %s: Custom error message from admin page */
+        $tmsg = sprintf(__("<strong>ERROR</strong>: %s", 'monocle'), $msg);
+        wp_die(wp_kses($tmsg, "strong"));
     }
 }
 
