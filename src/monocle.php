@@ -2,7 +2,6 @@
 
 /*
 Plugin Name: Monocle
-Plugin URI: https://spur.us
 Description: Monocle is a client side utility to detect VPNs, proxies, residential proxies, malware proxies, and other types of anonymization technologies at a session level. This allows you to make blocking decisions on busy IPs.
 Author: Spur
 Version: 1.0.1
@@ -109,7 +108,7 @@ function monocle_plugin_admin_init()
     // Create our settings field for decrypt token
     add_settings_field(
         'monocle_plugin_decrypt_token',
-        'Decrypt Token',
+        'API Token',
         'monocle_plugin_setting_decrypt_token',
         'monocle_plugin',
         'monocle_plugin_main'
