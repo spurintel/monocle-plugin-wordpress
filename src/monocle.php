@@ -5,7 +5,7 @@ Plugin Name: Monocle
 Plugin URI: https://spur.us
 Description: Monocle is a client side utility to detect VPNs, proxies, residential proxies, malware proxies, and other types of anonymization technologies at a session level. This allows you to make blocking decisions on busy IPs.
 Author: Spur
-Version: 1.0
+Version: 1.0.1
 Requires at least: 5.3
 Requires PHP:  7.4
 Author URI: https://spur.us
