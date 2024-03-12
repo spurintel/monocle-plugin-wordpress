@@ -139,7 +139,8 @@ function monocle_plugin_admin_init()
 function monocle_plugin_section_text()
 {
     echo '<p>Create an account and sign in at Spur. (<a href="https://spur.us" target="_blank">https://spur.us</a>)';
-    echo '<br>Tokens, documentation, and usage dashboard can be found in the <a href="https://app.spur.us/monocle" target="_blank">Monocle</a> menu.</p>';
+    echo '<br>Tokens, documentation, and usage dashboard can be found in the <a href="https://app.spur.us/monocle" target="_blank">Monocle</a> menu.';
+    echo '<br>The distinction between a VPN and Residential Proxy is discussed here: <a href="https://spur.us/what-is-a-residential-proxy/" target="_blank">What is a residential Proxy?</a></p>';
 }
 
 // Display and fill the site token form field
@@ -239,7 +240,7 @@ function monocle_enqueue_script()
     $options = get_option('monocle_plugin_options');
     if ($options != null && array_key_exists('site_token', $options)) {
         $site_token = $options['site_token'];
-        wp_enqueue_script('monocle', "https://mcl.spur.us/d/mcl.js?tk=$site_token", false);
+        wp_enqueue_script('monocle', "https://mcl.spur.us/d/mcl.js?tk=$site_token", false, 1.0, false);
     }
 }
 
