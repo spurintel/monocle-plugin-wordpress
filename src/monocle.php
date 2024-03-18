@@ -361,7 +361,7 @@ function monocle_check_registration_fields($errors, $sanitized_user_login, $user
         return $errors;
     }
 
-    $bundle = $_POST['monocle'];
+    $bundle = sanitize_text_field( wp_unslash ( $_POST['monocle'] ));
     $decoded_bundle = monocle_get_decoded_bundle($bundle);
     if (empty($decoded_bundle)) {
         $errors->add('monocle_no_bundle_error', __('<strong>ERROR</strong>: Unable to validate with Monocle', 'monocle'));
@@ -394,7 +394,7 @@ function monocle_check_login_fields($error)
         return "<strong>ERROR</strong>: Unable to validate with Monocle";
     }
 
-    $bundle = $_POST['monocle'];
+    $bundle = sanitize_text_field( wp_unslash ( $_POST['monocle'] ));
     $decoded_bundle = monocle_get_decoded_bundle($bundle);
     if(monocle_should_block($decoded_bundle)) {
         $options = get_option('monocle_plugin_options');
@@ -421,7 +421,7 @@ function monocle_check_comment()
         wp_die('ERROR: Monocle check failed');
     }
     
-    $bundle = $_POST['monocle'];
+    $bundle = sanitize_text_field( wp_unslash ( $_POST['monocle'] ));
     $decoded_bundle = monocle_get_decoded_bundle($bundle);
     if(monocle_should_block($decoded_bundle)) {
         $options = get_option('monocle_plugin_options');
