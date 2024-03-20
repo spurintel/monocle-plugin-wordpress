@@ -10,6 +10,7 @@ Monocle can detect a user session coming from a residential proxy, malware proxy
 [FAQ](https://spur.us/monocle/#faqs)  
 [Demo](https://spur.us/app/demos/monocle/form)  
 [Blog](https://spur.us/announcing-monocle-community-edition)  
+[WordPress Plugin](https://wordpress.org/plugins/monocle)
 
 ## Help and Support
 
