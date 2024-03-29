@@ -4,7 +4,7 @@
 Plugin Name: Monocle
 Description: Monocle is a client side utility to detect VPNs, proxies, residential proxies, malware proxies, and other types of anonymization technologies at a session level. This allows you to make blocking decisions on busy IPs.
 Author: Spur
-Version: 1.0.1
+Version: 1.0.3
 Requires at least: 5.3
 Requires PHP:  7.4
 Author URI: https://spur.us
@@ -249,7 +249,7 @@ add_action('wp_enqueue_scripts', 'monocle_enqueue_script');
 // Add the monocle class to login/register form
 function monocle_add_login_js()
 {
-    wp_enqueue_script('monocle-js', plugins_url('assets/js/add-monocle-class-login.js', __FILE__), array('jquery'), 1.0, true);
+    wp_enqueue_script('monocle-js', plugins_url('add-monocle-class-login.js', __FILE__), array('jquery'), 1.0, true);
 }
 
 add_action('login_enqueue_scripts', 'monocle_add_login_js');
